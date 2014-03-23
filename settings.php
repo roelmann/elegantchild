@@ -29,12 +29,12 @@ $settings = null;
 defined('MOODLE_INTERNAL') || die;
 
 	global $PAGE;
-	
+
 	$ADMIN->add('themes', new admin_category('theme_elegantchild', 'elegantchild'));
 
 	// "geneicsettings" settingpage
 	$temp = new admin_settingpage('theme_elegantchild_generic',  get_string('geneicsettings', 'theme_elegantchild'));
-	
+
     // Invert Navbar to dark background.
     $name = 'theme_elegantchild/invert';
     $title = get_string('invert', 'theme_elegantchild');
@@ -42,50 +42,32 @@ defined('MOODLE_INTERNAL') || die;
     $setting = new admin_setting_configcheckbox($name, $title, $description, 0);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $temp->add($setting);
-    
-    // Include Awesome Font from Bootstrapcdn
-    $name = 'theme_elegantchild/bootstrapcdn';
-    $title = get_string('bootstrapcdn', 'theme_elegantchild');
-    $description = get_string('bootstrapcdndesc', 'theme_elegantchild');
-    $setting = new admin_setting_configcheckbox($name, $title, $description, 0);
+
+    // Turn on fluid width
+    $name = 'theme_elegantchild/fluidwidth';
+    $title = get_string('fluidwidth', 'theme_elegantchild');
+    $description = get_string('fluidwidth_desc', 'theme_elegantchild');
+    $default = '0';
+    $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
+    $temp->add($setting);
+
+    // Font Icons
+    $name = 'theme_elegantchild/fonticons';
+    $title = get_string('fonticons', 'theme_elegantchild');
+    $description = get_string('fonticonsdesc', 'theme_elegantchild');
+    $default = '0';
+    $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
+    $temp->add($setting);
+
+    // Frontpage Content.
+    $name = 'theme_elegantchild/frontpagecontent';
+    $title = get_string('frontpagecontent', 'theme_elegantchild');
+    $description = get_string('frontpagecontentdesc', 'theme_elegantchild');
+    $default = '';
+    $setting = new admin_setting_confightmleditor($name, $title, $description, $default);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $temp->add($setting);
 
-    // Custom CSS file.
-    $name = 'theme_elegantchild/customcss';
-    $title = get_string('customcss', 'theme_elegantchild');
-    $description = get_string('customcssdesc', 'theme_elegantchild');
-    $default = '';
-    $setting = new admin_setting_configtextarea($name, $title, $description, $default);
-    $setting->set_updatedcallback('theme_reset_all_caches');
-    $temp->add($setting);
-    
-    // Main theme colour setting.
-    $name = 'theme_elegantchild/themecolor';
-    $title = get_string('themecolor', 'theme_elegantchild');
-    $description = get_string('themecolordesc', 'theme_elegantchild');
-    $default = '#2d91d0';
-    $previewconfig = null;
-    $setting = new admin_setting_configcolourpicker($name, $title, $description, $default, $previewconfig);
-    $setting->set_updatedcallback('theme_reset_all_caches');
-    $temp->add($setting);
-    
-    // Logo Image.
-    $name = 'theme_elegantchild/logo';
-    $title = get_string('logo', 'theme_elegantchild');
-    $description = get_string('logodesc', 'theme_elegantchild');
-    $setting = new admin_setting_configstoredfile($name, $title, $description, 'logo');
-    $setting->set_updatedcallback('theme_reset_all_caches');
-    $temp->add($setting);
-    	
-    // Header Background Image.
-    $name = 'theme_elegantchild/headerbg';
-    $title = get_string('headerbg', 'theme_elegantchild');
-    $description = get_string('headerbgdesc', 'theme_elegantchild');
-    $setting = new admin_setting_configstoredfile($name, $title, $description, 'headerbg');
-    $setting->set_updatedcallback('theme_reset_all_caches');
-    $temp->add($setting);
-    
      // Copyright setting.
     $name = 'theme_elegantchild/copyright';
     $title = get_string('copyright', 'theme_elegantchild');
@@ -102,7 +84,7 @@ defined('MOODLE_INTERNAL') || die;
     $setting = new admin_setting_confightmleditor($name, $title, $description, $default);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $temp->add($setting);
-    
+
     // Course Tiles.
     $name = 'theme_elegantchild/tiles';
     $title = get_string('tiles', 'theme_elegantchild');
@@ -110,14 +92,260 @@ defined('MOODLE_INTERNAL') || die;
     $setting = new admin_setting_configcheckbox($name, $title, $description, 0);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $temp->add($setting);
-    
+
+    // Embedded Video Max Width.
+    $name = 'theme_elegantchild/videowidth';
+    $title = get_string('videowidth', 'theme_elegantchild');
+    $description = get_string('videowidthdesc', 'theme_elegantchild');
+    $default = '100%';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $temp->add($setting);
+
+    // Custom CSS file.
+    $name = 'theme_elegantchild/customcss';
+    $title = get_string('customcss', 'theme_elegantchild');
+    $description = get_string('customcssdesc', 'theme_elegantchild');
+    $default = '';
+    $setting = new admin_setting_configtextarea($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $temp->add($setting);
+
     $ADMIN->add('theme_elegantchild', $temp);
-    
+
+    /* Color and Logo Settings */
+    $temp = new admin_settingpage('theme_elegantchild_colors', get_string('colorsettings', 'theme_elegantchild'));
+    $temp->add(new admin_setting_heading('theme_elegantchild_colors', get_string('colorsettingssub', 'theme_elegantchild'),
+    		format_text(get_string('colorsettingsdesc' , 'theme_elegantchild'), FORMAT_MARKDOWN)));
+
+    	// Main theme colour setting.
+    	$name = 'theme_elegantchild/themecolor';
+    	$title = get_string('themecolor', 'theme_elegantchild');
+    	$description = get_string('themecolordesc', 'theme_elegantchild');
+    	$default = '#0098e0';
+    	$previewconfig = null;
+    	$setting = new admin_setting_configcolourpicker($name, $title, $description, $default, $previewconfig);
+    	$setting->set_updatedcallback('theme_reset_all_caches');
+    	$temp->add($setting);
+
+    	// Main Font colour setting.
+    	$name = 'theme_elegantchild/fontcolor';
+    	$title = get_string('fontcolor', 'theme_elegantchild');
+    	$description = get_string('fontcolordesc', 'theme_elegantchild');
+    	$default = '#666';
+    	$previewconfig = null;
+    	$setting = new admin_setting_configcolourpicker($name, $title, $description, $default, $previewconfig);
+    	$setting->set_updatedcallback('theme_reset_all_caches');
+    	$temp->add($setting);
+
+    	// Heading colour setting.
+    	$name = 'theme_elegantchild/headingcolor';
+    	$title = get_string('headingcolor', 'theme_elegantchild');
+    	$description = get_string('headingcolordesc', 'theme_elegantchild');
+    	$default = '#27282a';
+    	$previewconfig = null;
+    	$setting = new admin_setting_configcolourpicker($name, $title, $description, $default, $previewconfig);
+    	$setting->set_updatedcallback('theme_reset_all_caches');
+    	$temp->add($setting);
+
+    	// Logo Image.
+    	$name = 'theme_elegantchild/logo';
+    	$title = get_string('logo', 'theme_elegantchild');
+    	$description = get_string('logodesc', 'theme_elegantchild');
+    	$setting = new admin_setting_configstoredfile($name, $title, $description, 'logo');
+    	$setting->set_updatedcallback('theme_reset_all_caches');
+    	$temp->add($setting);
+
+    	// Header Background Image.
+    	$name = 'theme_elegantchild/headerbg';
+    	$title = get_string('headerbg', 'theme_elegantchild');
+    	$description = get_string('headerbgdesc', 'theme_elegantchild');
+    	$setting = new admin_setting_configstoredfile($name, $title, $description, 'headerbg');
+    	$setting->set_updatedcallback('theme_reset_all_caches');
+    	$temp->add($setting);
+
+    	// Body Background Image.
+    	$name = 'theme_elegantchild/bodybg';
+    	$title = get_string('bodybg', 'theme_elegantchild');
+    	$description = get_string('bodybgdesc', 'theme_elegantchild');
+    	$setting = new admin_setting_configstoredfile($name, $title, $description, 'bodybg');
+    	$setting->set_updatedcallback('theme_reset_all_caches');
+    	$temp->add($setting);
+
+    	// Main theme colour setting.
+    	$name = 'theme_elegantchild/bodycolor';
+    	$title = get_string('bodycolor', 'theme_elegantchild');
+    	$description = get_string('bodycolordesc', 'theme_elegantchild');
+    	$default = '#f1f1f4';
+    	$previewconfig = null;
+    	$setting = new admin_setting_configcolourpicker($name, $title, $description, $default, $previewconfig);
+    	$setting->set_updatedcallback('theme_reset_all_caches');
+    	$temp->add($setting);
+
+    	// Set Transparency.
+    	$name = 'theme_elegantchild/transparency';
+    	$title = get_string('transparency' , 'theme_elegantchild');
+    	$description = get_string('transparencydesc', 'theme_elegantchild');
+    	$default = '1';
+    	$choices = array(
+    		'.10'=>'10%',
+    		'.15'=>'15%',
+    		'.20'=>'20%',
+    		'.25'=>'25%',
+    		'.30'=>'30%',
+    		'.35'=>'35%',
+    		'.40'=>'40%',
+    		'.45'=>'45%',
+    		'.50'=>'50%',
+    		'.55'=>'55%',
+    		'.60'=>'60%',
+    		'.65'=>'65%',
+    		'.70'=>'70%',
+    		'.75'=>'75%',
+    		'.80'=>'80%',
+    		'.85'=>'85%',
+    		'.90'=>'90%',
+    		'.95'=>'95%',
+   		'1'=>'100%');
+    	$setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
+   	$setting->set_updatedcallback('theme_reset_all_caches');
+    	$temp->add($setting);
+
+    $ADMIN->add('theme_elegantchild', $temp);
+
+    /* Banner Settings */
+    $temp = new admin_settingpage('theme_elegantchild_usermenu', get_string('usermenusettings', 'theme_elegantchild'));
+    $temp->add(new admin_setting_heading('theme_elegantchild_usermenu', get_string('usermenusettingssub', 'theme_elegantchild'),
+    		format_text(get_string('usermenusettingsdesc' , 'theme_elegantchild'), FORMAT_MARKDOWN)));
+
+    	// Enable My.
+    	$name = 'theme_elegantchild/enablemy';
+    	$title = get_string('enablemy', 'theme_elegantchild');
+    	$description = get_string('enablemydesc', 'theme_elegantchild');
+    	$default = true;
+    	$setting = new admin_setting_configcheckbox($name, $title, $description, $default, true, false);
+    	$setting->set_updatedcallback('theme_reset_all_caches');
+    	$temp->add($setting);
+
+    	// Enable View Profile.
+    	$name = 'theme_elegantchild/enableprofile';
+    	$title = get_string('enableprofile', 'theme_elegantchild');
+    	$description = get_string('enableprofiledesc', 'theme_elegantchild');
+    	$default = true;
+    	$setting = new admin_setting_configcheckbox($name, $title, $description, $default, true, false);
+    	$setting->set_updatedcallback('theme_reset_all_caches');
+    	$temp->add($setting);
+
+    	// Enable Edit Profile.
+    	$name = 'theme_elegantchild/enableeditprofile';
+    	$title = get_string('enableeditprofile', 'theme_elegantchild');
+    	$description = get_string('enableeditprofiledesc', 'theme_elegantchild');
+    	$default = true;
+    	$setting = new admin_setting_configcheckbox($name, $title, $description, $default, true, false);
+    	$setting->set_updatedcallback('theme_reset_all_caches');
+    	$temp->add($setting);
+
+    	// Enable Calendar.
+    	$name = 'theme_elegantchild/enablecalendar';
+    	$title = get_string('enablecalendar', 'theme_elegantchild');
+    	$description = get_string('enablecalendardesc', 'theme_elegantchild');
+    	$default = true;
+    	$setting = new admin_setting_configcheckbox($name, $title, $description, $default, true, false);
+    	$setting->set_updatedcallback('theme_reset_all_caches');
+    	$temp->add($setting);
+
+    	// Enable Private Files.
+    	$name = 'theme_elegantchild/enableprivatefiles';
+    	$title = get_string('enableprivatefiles', 'theme_elegantchild');
+    	$description = get_string('enableprivatefilesdesc', 'theme_elegantchild');
+    	$default = false;
+    	$setting = new admin_setting_configcheckbox($name, $title, $description, $default, true, false);
+    	$setting->set_updatedcallback('theme_reset_all_caches');
+    	$temp->add($setting);
+
+    	// Enable Badges.
+    	$name = 'theme_elegantchild/enablebadges';
+    	$title = get_string('enablebadges', 'theme_elegantchild');
+    	$description = get_string('enablebadgesdesc', 'theme_elegantchild');
+    	$default = false;
+    	$setting = new admin_setting_configcheckbox($name, $title, $description, $default, true, false);
+    	$setting->set_updatedcallback('theme_reset_all_caches');
+    	$temp->add($setting);
+
+    	// Additional number of links.
+    		$name = 'theme_elegantchild/usermenulinks';
+    		$title = get_string('usermenulinks' , 'theme_elegantchild');
+    		$description = get_string('usermenulinksdesc', 'theme_elegantchild');
+    		$default = '0';
+    		$choices = array(
+    			'0'=>'0',
+    			'1'=>'1',
+    			'2'=>'2',
+    			'3'=>'3',
+    			'4'=>'4',
+    			'5'=>'5',
+    			'6'=>'6',
+    			'7'=>'7',
+    			'8'=>'8',
+    			'9'=>'9',
+    			'10'=>'10');
+    		$setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
+    		$setting->set_updatedcallback('theme_reset_all_caches');
+    		$temp->add($setting);
+
+    		$hascustomlinknum = (!empty($PAGE->theme->settings->usermenulinks));
+    			if ($hascustomlinknum) {
+    				$usermenulinks = $PAGE->theme->settings->usermenulinks;
+    			} else {
+    				$usermenulinks = '0';
+    			}
+    if ($hascustomlinknum !=0) {
+		foreach (range(1, $usermenulinks) as $customlinknumber) {
+
+		// This is the descriptor for the Custom Link.
+		$name = 'theme_elegantchild/customlink';
+		$title = get_string('customlinkindicator', 'theme_elegantchild');
+		$information = get_string('customlinkindicatordesc', 'theme_elegantchild');
+		$setting = new admin_setting_heading($name.$customlinknumber, $title.$customlinknumber, $information);
+		$setting->set_updatedcallback('theme_reset_all_caches');
+		$temp->add($setting);
+
+		// Icon for Custom Link
+		$name = 'theme_elegantchild/customlinkicon' . $customlinknumber;
+		$title = get_string('customlinkicon', 'theme_elegantchild', $customlinknumber);
+		$description = get_string('customlinkicondesc', 'theme_elegantchild', $customlinknumber);
+		$default = 'dot-circle-o';
+		$setting = new admin_setting_configtextarea($name, $title, $description, $default);
+		$setting->set_updatedcallback('theme_reset_all_caches');
+		$temp->add($setting);
+
+		// Text for Custom Link
+		$name = 'theme_elegantchild/customlinkname' . $customlinknumber;
+		$title = get_string('customlinkname', 'theme_elegantchild', $customlinknumber);
+		$description = get_string('customlinknamedesc', 'theme_elegantchild', $customlinknumber);
+		$default = '';
+		$setting = new admin_setting_configtext($name, $title, $description, $default);
+		$setting->set_updatedcallback('theme_reset_all_caches');
+		$temp->add($setting);
+
+		// Destination URL for Custom Link
+		$name = 'theme_elegantchild/customlinkurl' . $customlinknumber;
+		$title = get_string('customlinkurl', 'theme_elegantchild', $customlinknumber);
+		$description = get_string('customlinkurldesc', 'theme_elegantchild', $customlinknumber);
+		$default = '';
+		$previewconfig = null;
+		$setting = new admin_setting_configtext($name, $title, $description, $default);
+		$setting->set_updatedcallback('theme_reset_all_caches');
+		$temp->add($setting);
+		}
+	}
+
+    	$ADMIN->add('theme_elegantchild', $temp);
+
     /* Banner Settings */
     $temp = new admin_settingpage('theme_elegantchild_banner', get_string('bannersettings', 'theme_elegantchild'));
     $temp->add(new admin_setting_heading('theme_elegantchild_banner', get_string('bannersettingssub', 'theme_elegantchild'),
             format_text(get_string('bannersettingsdesc' , 'theme_elegantchild'), FORMAT_MARKDOWN)));
-            
+
     // Set Number of Slides.
     $name = 'theme_elegantchild/slidenumber';
     $title = get_string('slidenumber' , 'theme_elegantchild');
@@ -138,10 +366,19 @@ defined('MOODLE_INTERNAL') || die;
     $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $temp->add($setting);
-    
+
+    // Set the Slide Speed.
+    $name = 'theme_elegantchild/slidespeed';
+    $title = get_string('slidespeed' , 'theme_elegantchild');
+    $description = get_string('slidespeeddesc', 'theme_elegantchild');
+    $default = '600';
+    $setting = new admin_setting_configtext($name, $title, $description, $default );
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $temp->add($setting);
+
     $hasslidenum = (!empty($PAGE->theme->settings->slidenumber));
     if ($hasslidenum) {
-    	$slidenum = $PAGE->theme->settings->slidenumber;
+    		$slidenum = $PAGE->theme->settings->slidenumber;
 	} else {
 		$slidenum = '1';
 	}
@@ -149,7 +386,7 @@ defined('MOODLE_INTERNAL') || die;
 	$bannertitle = array('Slide One', 'Slide Two', 'Slide Three','Slide Four','Slide Five','Slide Six','Slide Seven', 'Slide Eight', 'Slide Nine', 'Slide Ten');
 
     foreach (range(1, $slidenum) as $bannernumber) {
-    	
+
     	// This is the descriptor for the Banner Settings.
     	$name = 'theme_elegantchild/banner';
         $title = get_string('bannerindicator', 'theme_elegantchild');
@@ -166,7 +403,7 @@ defined('MOODLE_INTERNAL') || die;
         $setting = new admin_setting_configcheckbox($name, $title, $description, $default, true, false);
         $setting->set_updatedcallback('theme_reset_all_caches');
         $temp->add($setting);
-  
+
         // Slide Title.
         $name = 'theme_elegantchild/bannertitle' . $bannernumber;
         $title = get_string('bannertitle', 'theme_elegantchild', $bannernumber);
@@ -184,7 +421,7 @@ defined('MOODLE_INTERNAL') || die;
         $setting = new admin_setting_configtextarea($name, $title, $description, $default);
         $setting->set_updatedcallback('theme_reset_all_caches');
         $temp->add($setting);
-        
+
         // Text for Slide Link.
         $name = 'theme_elegantchild/bannerlinktext' . $bannernumber;
         $title = get_string('bannerlinktext', 'theme_elegantchild', $bannernumber);
@@ -203,7 +440,7 @@ defined('MOODLE_INTERNAL') || die;
         $setting = new admin_setting_configtext($name, $title, $description, $default);
         $setting->set_updatedcallback('theme_reset_all_caches');
         $temp->add($setting);
-        
+
         // Slide Image.
     	$name = 'theme_elegantchild/bannerimage' . $bannernumber;
     	$title = get_string('bannerimage', 'theme_elegantchild', $bannernumber);
@@ -211,7 +448,7 @@ defined('MOODLE_INTERNAL') || die;
     	$setting = new admin_setting_configstoredfile($name, $title, $description, 'bannerimage'.$bannernumber);
     	$setting->set_updatedcallback('theme_reset_all_caches');
     	$temp->add($setting);
-    	
+
     	// Slide Background Color.
     	$name = 'theme_elegantchild/bannercolor' . $bannernumber;
     	$title = get_string('bannercolor', 'theme_elegantchild', $bannernumber);
@@ -225,12 +462,303 @@ defined('MOODLE_INTERNAL') || die;
     }
 
  	$ADMIN->add('theme_elegantchild', $temp);
- 	
+
+ 	/* Marketing Spot Settings */
+ 		$temp = new admin_settingpage('theme_elegantchild_marketing', get_string('marketingheading', 'theme_elegantchild'));
+ 		$temp->add(new admin_setting_heading('theme_elegantchild_marketing', get_string('marketingheadingsub', 'theme_elegantchild'),
+ 				format_text(get_string('marketingdesc' , 'theme_elegantchild'), FORMAT_MARKDOWN)));
+
+ 		// Toggle Marketing Spots.
+ 		$name = 'theme_elegantchild/togglemarketing';
+ 		$title = get_string('togglemarketing' , 'theme_elegantchild');
+ 		$description = get_string('togglemarketingdesc', 'theme_elegantchild');
+ 		$alwaysdisplay = get_string('alwaysdisplay', 'theme_elegantchild');
+ 		$displaybeforelogin = get_string('displaybeforelogin', 'theme_elegantchild');
+ 		$displayafterlogin = get_string('displayafterlogin', 'theme_elegantchild');
+ 		$dontdisplay = get_string('dontdisplay', 'theme_elegantchild');
+ 		$default = 'display';
+ 		$choices = array('1'=>$alwaysdisplay, '2'=>$displaybeforelogin, '3'=>$displayafterlogin, '0'=>$dontdisplay);
+ 		$setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
+ 		$setting->set_updatedcallback('theme_reset_all_caches');
+ 		$temp->add($setting);
+
+ 		$name = 'theme_elegantchild/marketingtitle';
+ 		$title = get_string('marketingtitle', 'theme_elegantchild');
+ 		$description = get_string('marketingtitledesc', 'theme_elegantchild');
+ 		$default = 'More about Us';
+ 		$setting = new admin_setting_configtext($name, $title, $description, $default);
+ 		$setting->set_updatedcallback('theme_reset_all_caches');
+ 		$temp->add($setting);
+
+ 		$name = 'theme_elegantchild/marketingtitleicon';
+ 		$title = get_string('marketingtitleicon', 'theme_elegantchild');
+ 		$description = get_string('marketingtitleicondesc', 'theme_elegantchild');
+ 		$default = 'globe';
+ 		$setting = new admin_setting_configtext($name, $title, $description, $default);
+ 		$setting->set_updatedcallback('theme_reset_all_caches');
+ 		$temp->add($setting);
+
+ 		//This is the descriptor for Marketing Spot One
+ 		$name = 'theme_elegantchild/marketing1info';
+ 		$heading = get_string('marketing1', 'theme_elegantchild');
+ 		$information = get_string('marketinginfodesc', 'theme_elegantchild');
+ 		$setting = new admin_setting_heading($name, $heading, $information);
+ 		$temp->add($setting);
+
+ 		//Marketing Spot One.
+ 		$name = 'theme_elegantchild/marketing1';
+ 		$title = get_string('marketingtitle', 'theme_elegantchild');
+ 		$description = get_string('marketingtitledesc', 'theme_elegantchild');
+ 		$default = '';
+ 		$setting = new admin_setting_configtext($name, $title, $description, $default);
+ 		$setting->set_updatedcallback('theme_reset_all_caches');
+ 		$temp->add($setting);
+
+ 		$name = 'theme_elegantchild/marketing1icon';
+ 		$title = get_string('marketingicon', 'theme_elegantchild');
+ 		$description = get_string('marketingicondesc', 'theme_elegantchild');
+ 		$default = 'star';
+ 		$setting = new admin_setting_configtext($name, $title, $description, $default);
+ 		$setting->set_updatedcallback('theme_reset_all_caches');
+ 		$temp->add($setting);
+
+ 		$name = 'theme_elegantchild/marketing1content';
+ 		$title = get_string('marketingcontent', 'theme_elegantchild');
+ 		$description = get_string('marketingcontentdesc', 'theme_elegantchild');
+ 		$default = '';
+ 		$setting = new admin_setting_confightmleditor($name, $title, $description, $default);
+ 		$setting->set_updatedcallback('theme_reset_all_caches');
+ 		$temp->add($setting);
+
+ 		//This is the descriptor for Marketing Spot Two
+ 		$name = 'theme_elegantchild/marketing2info';
+ 		$heading = get_string('marketing2', 'theme_elegantchild');
+ 		$information = get_string('marketinginfodesc', 'theme_elegantchild');
+ 		$setting = new admin_setting_heading($name, $heading, $information);
+ 		$temp->add($setting);
+
+ 		//Marketing Spot Two.
+ 		$name = 'theme_elegantchild/marketing2';
+ 		$title = get_string('marketingtitle', 'theme_elegantchild');
+ 		$description = get_string('marketingtitledesc', 'theme_elegantchild');
+ 		$default = '';
+ 		$setting = new admin_setting_configtext($name, $title, $description, $default);
+ 		$setting->set_updatedcallback('theme_reset_all_caches');
+ 		$temp->add($setting);
+
+ 		$name = 'theme_elegantchild/marketing2icon';
+ 		$title = get_string('marketingicon', 'theme_elegantchild');
+ 		$description = get_string('marketingicondesc', 'theme_elegantchild');
+ 		$default = 'star';
+ 		$setting = new admin_setting_configtext($name, $title, $description, $default);
+ 		$setting->set_updatedcallback('theme_reset_all_caches');
+ 		$temp->add($setting);
+
+ 		$name = 'theme_elegantchild/marketing2content';
+ 		$title = get_string('marketingcontent', 'theme_elegantchild');
+ 		$description = get_string('marketingcontentdesc', 'theme_elegantchild');
+ 		$default = '';
+ 		$setting = new admin_setting_confightmleditor($name, $title, $description, $default);
+ 		$setting->set_updatedcallback('theme_reset_all_caches');
+ 		$temp->add($setting);
+
+ 		//This is the descriptor for Marketing Spot Three
+ 		$name = 'theme_elegantchild/marketing3info';
+ 		$heading = get_string('marketing3', 'theme_elegantchild');
+ 		$information = get_string('marketinginfodesc', 'theme_elegantchild');
+ 		$setting = new admin_setting_heading($name, $heading, $information);
+ 		$temp->add($setting);
+
+ 		//Marketing Spot Three.
+ 		$name = 'theme_elegantchild/marketing3';
+ 		$title = get_string('marketingtitle', 'theme_elegantchild');
+ 		$description = get_string('marketingtitledesc', 'theme_elegantchild');
+ 		$default = '';
+ 		$setting = new admin_setting_configtext($name, $title, $description, $default);
+ 		$setting->set_updatedcallback('theme_reset_all_caches');
+ 		$temp->add($setting);
+
+ 		$name = 'theme_elegantchild/marketing3icon';
+ 		$title = get_string('marketingicon', 'theme_elegantchild');
+ 		$description = get_string('marketingicondesc', 'theme_elegantchild');
+ 		$default = 'star';
+ 		$setting = new admin_setting_configtext($name, $title, $description, $default);
+ 		$setting->set_updatedcallback('theme_reset_all_caches');
+ 		$temp->add($setting);
+
+ 		$name = 'theme_elegantchild/marketing3content';
+ 		$title = get_string('marketingcontent', 'theme_elegantchild');
+ 		$description = get_string('marketingcontentdesc', 'theme_elegantchild');
+ 		$default = '';
+ 		$setting = new admin_setting_confightmleditor($name, $title, $description, $default);
+ 		$setting->set_updatedcallback('theme_reset_all_caches');
+ 		$temp->add($setting);
+
+ 		//This is the descriptor for Marketing Spot Four
+ 		$name = 'theme_elegantchild/marketing4info';
+ 		$heading = get_string('marketing4', 'theme_elegantchild');
+ 		$information = get_string('marketinginfodesc', 'theme_elegantchild');
+ 		$setting = new admin_setting_heading($name, $heading, $information);
+ 		$temp->add($setting);
+
+ 		//Marketing Spot Four.
+ 		$name = 'theme_elegantchild/marketing4';
+ 		$title = get_string('marketingtitle', 'theme_elegantchild');
+ 		$description = get_string('marketingtitledesc', 'theme_elegantchild');
+ 		$default = '';
+ 		$setting = new admin_setting_configtext($name, $title, $description, $default);
+ 		$setting->set_updatedcallback('theme_reset_all_caches');
+ 		$temp->add($setting);
+
+ 		$name = 'theme_elegantchild/marketing4icon';
+ 		$title = get_string('marketingicon', 'theme_elegantchild');
+ 		$description = get_string('marketingicondesc', 'theme_elegantchild');
+ 		$default = 'star';
+ 		$setting = new admin_setting_configtext($name, $title, $description, $default);
+ 		$setting->set_updatedcallback('theme_reset_all_caches');
+ 		$temp->add($setting);
+
+ 		$name = 'theme_elegantchild/marketing4content';
+ 		$title = get_string('marketingcontent', 'theme_elegantchild');
+ 		$description = get_string('marketingcontentdesc', 'theme_elegantchild');
+ 		$default = '';
+ 		$setting = new admin_setting_confightmleditor($name, $title, $description, $default);
+ 		$setting->set_updatedcallback('theme_reset_all_caches');
+ 		$temp->add($setting);
+
+ 	$ADMIN->add('theme_elegantchild', $temp);
+
+ 	/* Quick Link Settings */
+ 		$temp = new admin_settingpage('theme_elegantchild_quicklinks', get_string('quicklinksheading', 'theme_elegantchild'));
+ 		$temp->add(new admin_setting_heading('theme_elegantchild_quicklinks', get_string('quicklinksheadingsub', 'theme_elegantchild'),
+ 				format_text(get_string('quicklinksdesc' , 'theme_elegantchild'), FORMAT_MARKDOWN)));
+
+ 		// Toggle Quick Links.
+ 		$name = 'theme_elegantchild/togglequicklinks';
+ 		$title = get_string('togglequicklinks' , 'theme_elegantchild');
+ 		$description = get_string('togglequicklinksdesc', 'theme_elegantchild');
+ 		$alwaysdisplay = get_string('alwaysdisplay', 'theme_elegantchild');
+ 		$displaybeforelogin = get_string('displaybeforelogin', 'theme_elegantchild');
+ 		$displayafterlogin = get_string('displayafterlogin', 'theme_elegantchild');
+ 		$dontdisplay = get_string('dontdisplay', 'theme_elegantchild');
+ 		$default = 'display';
+ 		$choices = array('1'=>$alwaysdisplay, '2'=>$displaybeforelogin, '3'=>$displayafterlogin, '0'=>$dontdisplay);
+ 		$setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
+ 		$setting->set_updatedcallback('theme_reset_all_caches');
+ 		$temp->add($setting);
+
+ 		// Set Number of Quick Links.
+ 		$name = 'theme_elegantchild/quicklinksnumber';
+ 		$title = get_string('quicklinksnumber' , 'theme_elegantchild');
+ 		$description = get_string('quicklinksnumberdesc', 'theme_elegantchild');
+ 		$default = '4';
+ 		$choices = array(
+ 			'1'=>'1',
+ 			'2'=>'2',
+ 			'3'=>'3',
+ 			'4'=>'4',
+ 			'5'=>'5',
+ 			'6'=>'6',
+ 			'7'=>'7',
+ 			'8'=>'8',
+ 			'9'=>'9',
+ 			'10'=>'10',
+ 			'11'=>'11',
+ 			'12'=>'12');
+ 		$setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
+ 		$setting->set_updatedcallback('theme_reset_all_caches');
+ 		$temp->add($setting);
+
+ 		$hasquicklinksnum = (!empty($PAGE->theme->settings->quicklinksnumber));
+ 			if ($hasquicklinksnum) {
+ 				$quicklinksnum = $PAGE->theme->settings->quicklinksnumber;
+ 			} else {
+ 				$quicklinksnum = '4';
+ 			}
+ 		//This is the title for the Quick Links area
+ 		$name = 'theme_elegantchild/quicklinkstitle';
+ 		$title = get_string('quicklinkstitle', 'theme_elegantchild');
+ 		$description = get_string('quicklinkstitledesc', 'theme_elegantchild');
+ 		$default = 'Site Quick Links';
+ 		$setting = new admin_setting_configtext($name, $title, $description, $default);
+ 		$setting->set_updatedcallback('theme_reset_all_caches');
+ 		$temp->add($setting);
+
+ 		//This is the icon for the Quick Links area
+ 		$name = 'theme_elegantchild/quicklinksicon';
+ 		$title = get_string('quicklinksicon', 'theme_elegantchild');
+ 		$description = get_string('quicklinksicondesc', 'theme_elegantchild');
+ 		$default = 'link';
+ 		$setting = new admin_setting_configtext($name, $title, $description, $default);
+ 		$setting->set_updatedcallback('theme_reset_all_caches');
+ 		$temp->add($setting);
+
+ 		foreach (range(1, $quicklinksnum) as $quicklinksnumber) {
+
+ 			//This is the descriptor for Quick Link One
+ 			$name = 'theme_elegantchild/quicklinkinfo';
+ 			$title = get_string('quicklinks', 'theme_elegantchild');
+ 			$information = get_string('quicklinksdesc', 'theme_elegantchild');
+ 			$setting = new admin_setting_heading($name.$quicklinksnumber, $title.$quicklinksnumber, $information);
+ 			$setting->set_updatedcallback('theme_reset_all_caches');
+ 			$temp->add($setting);
+
+ 			//Quick Link Icon.
+ 			$name = 'theme_elegantchild/quicklinkicon' . $quicklinksnumber;
+ 			$title = get_string('quicklinkicon', 'theme_elegantchild', $quicklinksnumber);
+ 			$description = get_string('quicklinkicondesc', 'theme_elegantchild', $quicklinksnumber);
+ 			$default = 'star';
+ 			$setting = new admin_setting_configtext($name, $title, $description, $default);
+ 			$setting->set_updatedcallback('theme_reset_all_caches');
+ 			$temp->add($setting);
+
+ 			// Quick Link Icon Color.
+ 			$name = 'theme_elegantchild/quicklinkiconcolor' . $quicklinksnumber;
+ 			$title = get_string('quicklinkiconcolor', 'theme_elegantchild', $quicklinksnumber);
+ 			$description = get_string('quicklinkiconcolordesc', 'theme_elegantchild', $quicklinksnumber);
+ 			$default = '';
+ 			$previewconfig = null;
+ 			$setting = new admin_setting_configcolourpicker($name, $title, $description, $default, $previewconfig);
+ 			$setting->set_updatedcallback('theme_reset_all_caches');
+ 			$temp->add($setting);
+
+ 			// Quick Link Button Text.
+ 			$name = 'theme_elegantchild/quicklinkbuttontext' . $quicklinksnumber;
+ 			$title = get_string('quicklinkbuttontext', 'theme_elegantchild', $quicklinksnumber);
+ 			$description = get_string('quicklinkbuttontextdesc', 'theme_elegantchild', $quicklinksnumber);
+ 			$default = 'Click Here';
+ 			$setting = new admin_setting_configtext($name, $title, $description, $default);
+ 			$setting->set_updatedcallback('theme_reset_all_caches');
+ 			$temp->add($setting);
+
+ 			// Quick Link Button Color.
+ 			$name = 'theme_elegantchild/quicklinkbuttoncolor' . $quicklinksnumber;
+ 			$title = get_string('quicklinkbuttoncolor', 'theme_elegantchild', $quicklinksnumber);
+ 			$description = get_string('quicklinkbuttoncolordesc', 'theme_elegantchild', $quicklinksnumber);
+ 			$default = '';
+ 			$previewconfig = null;
+ 			$setting = new admin_setting_configcolourpicker($name, $title, $description, $default, $previewconfig);
+ 			$setting->set_updatedcallback('theme_reset_all_caches');
+ 			$temp->add($setting);
+
+ 			// Quick Link Button URL.
+ 			$name = 'theme_elegantchild/quicklinkbuttonurl' . $quicklinksnumber;
+ 			$title = get_string('quicklinkbuttonurl', 'theme_elegantchild', $quicklinksnumber);
+ 			$description = get_string('quicklinkbuttonurldesc', 'theme_elegantchild', $quicklinksnumber);
+ 			$default = '';
+ 			$setting = new admin_setting_configtext($name, $title, $description, '', PARAM_URL);
+ 			$setting->set_updatedcallback('theme_reset_all_caches');
+ 			$temp->add($setting);
+ 		}
+
+
+ 	$ADMIN->add('theme_elegantchild', $temp);
+
  	/* Login Page Settings */
     $temp = new admin_settingpage('theme_elegantchild_loginsettings', get_string('loginsettings', 'theme_elegantchild'));
     $temp->add(new admin_setting_heading('theme_elegantchild_loginsettings', get_string('loginsettingssub', 'theme_elegantchild'),
             format_text(get_string('loginsettingsdesc' , 'theme_elegantchild'), FORMAT_MARKDOWN)));
-            
+
     // Enable Custom Login Page.
     $name = 'theme_elegantchild/enablecustomlogin';
     $title = get_string('enablecustomlogin', 'theme_elegantchild');
@@ -238,7 +766,7 @@ defined('MOODLE_INTERNAL') || die;
     $setting = new admin_setting_configcheckbox($name, $title, $description, 1);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $temp->add($setting);
-            
+
     // Set Number of Slides.
     $name = 'theme_elegantchild/loginbgumber';
     $title = get_string('loginbgumber' , 'theme_elegantchild');
@@ -253,7 +781,7 @@ defined('MOODLE_INTERNAL') || die;
     $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $temp->add($setting);
-    
+
     $hasloginbgnum = (!empty($PAGE->theme->settings->loginbgumber));
     if ($hasloginbgnum) {
     	$loginbgnum = $PAGE->theme->settings->loginbgumber;
@@ -262,8 +790,8 @@ defined('MOODLE_INTERNAL') || die;
 	}
 
     foreach (range(1, $loginbgnum) as $loginbgnumber) {
-        
-        // Login Background Image.
+
+    // Login Background Image.
     	$name = 'theme_elegantchild/loginimage' . $loginbgnumber;
     	$title = get_string('loginimage', 'theme_elegantchild');
     	$description = get_string('loginimagedesc', 'theme_elegantchild');
@@ -274,12 +802,12 @@ defined('MOODLE_INTERNAL') || die;
     }
 
  	$ADMIN->add('theme_elegantchild', $temp);
- 	
+
  	/* Social Network Settings */
 	$temp = new admin_settingpage('theme_elegantchild_social', get_string('socialheading', 'theme_elegantchild'));
 	$temp->add(new admin_setting_heading('theme_elegantchild_social', get_string('socialheadingsub', 'theme_elegantchild'),
             format_text(get_string('socialdesc' , 'theme_elegantchild'), FORMAT_MARKDOWN)));
-	
+
     // Website url setting.
     $name = 'theme_elegantchild/website';
     $title = get_string('website', 'theme_elegantchild');
@@ -288,7 +816,16 @@ defined('MOODLE_INTERNAL') || die;
     $setting = new admin_setting_configtext($name, $title, $description, $default);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $temp->add($setting);
-    
+
+    // Blog url setting.
+    $name = 'theme_elegantchild/blog';
+    $title = get_string('blog', 'theme_elegantchild');
+    $description = get_string('blogdesc', 'theme_elegantchild');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $temp->add($setting);
+
     // Facebook url setting.
     $name = 'theme_elegantchild/facebook';
     $title = get_string(    	'facebook', 'theme_elegantchild');
@@ -297,7 +834,7 @@ defined('MOODLE_INTERNAL') || die;
     $setting = new admin_setting_configtext($name, $title, $description, $default);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $temp->add($setting);
-    
+
     // Flickr url setting.
     $name = 'theme_elegantchild/flickr';
     $title = get_string('flickr', 'theme_elegantchild');
@@ -333,7 +870,16 @@ defined('MOODLE_INTERNAL') || die;
     $setting = new admin_setting_configtext($name, $title, $description, $default);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $temp->add($setting);
-    
+
+    // Tumblr url setting.
+    $name = 'theme_elegantchild/tumblr';
+    $title = get_string('tumblr', 'theme_elegantchild');
+    $description = get_string('tumblrdesc', 'theme_elegantchild');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $temp->add($setting);
+
     // Pinterest url setting.
     $name = 'theme_elegantchild/pinterest';
     $title = get_string('pinterest', 'theme_elegantchild');
@@ -342,7 +888,7 @@ defined('MOODLE_INTERNAL') || die;
     $setting = new admin_setting_configtext($name, $title, $description, $default);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $temp->add($setting);
-    
+
     // Instagram url setting.
     $name = 'theme_elegantchild/instagram';
     $title = get_string('instagram', 'theme_elegantchild');
@@ -351,7 +897,7 @@ defined('MOODLE_INTERNAL') || die;
     $setting = new admin_setting_configtext($name, $title, $description, $default);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $temp->add($setting);
-    
+
     // YouTube url setting.
     $name = 'theme_elegantchild/youtube';
     $title = get_string('youtube', 'theme_elegantchild');
@@ -360,7 +906,16 @@ defined('MOODLE_INTERNAL') || die;
     $setting = new admin_setting_configtext($name, $title, $description, $default);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $temp->add($setting);
-    
+
+    // Vimeo url setting.
+    $name = 'theme_elegantchild/vimeo';
+    $title = get_string('vimeo', 'theme_elegantchild');
+    $description = get_string('vimeodesc', 'theme_elegantchild');
+    $default = '';
+    $setting = new admin_setting_configtext($name, $title, $description, $default);
+    $setting->set_updatedcallback('theme_reset_all_caches');
+    $temp->add($setting);
+
     // Skype url setting.
     $name = 'theme_elegantchild/skype';
     $title = get_string('skype', 'theme_elegantchild');
@@ -369,7 +924,7 @@ defined('MOODLE_INTERNAL') || die;
     $setting = new admin_setting_configtext($name, $title, $description, $default);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $temp->add($setting);
- 
+
     // VKontakte url setting.
     $name = 'theme_elegantchild/vk';
     $title = get_string('vk', 'theme_elegantchild');
@@ -377,10 +932,10 @@ defined('MOODLE_INTERNAL') || die;
     $default = '';
     $setting = new admin_setting_configtext($name, $title, $description, $default);
     $setting->set_updatedcallback('theme_reset_all_caches');
-    $temp->add($setting); 
-    
+    $temp->add($setting);
+
     $ADMIN->add('theme_elegantchild', $temp);
-    
+
     /* Category Settings */
     $temp = new admin_settingpage('theme_elegantchild_categoryicon', get_string('categoryiconheading', 'theme_elegantchild'));
 	$temp->add(new admin_setting_heading('theme_elegantchild_categoryicon', get_string('categoryiconheadingsub', 'theme_elegantchild'),
@@ -392,7 +947,7 @@ defined('MOODLE_INTERNAL') || die;
     $setting = new admin_setting_configcheckbox($name, $title, $description, 0);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $temp->add($setting);
-    
+
     // Default Icon Selector.
     $name = 'theme_elegantchild/defaultcategoryicon';
     $title = get_string('defaultcategoryicon' , 'theme_elegantchild');
@@ -769,7 +1324,7 @@ defined('MOODLE_INTERNAL') || die;
     $setting = new admin_setting_configselect($name, $title, $description, $default, $choices);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $temp->add($setting);
-    
+
     // Set Number of Categories.
     $name = 'theme_elegantchild/categorynumber';
     $title = get_string('categorynumber' , 'theme_elegantchild');
@@ -801,24 +1356,24 @@ defined('MOODLE_INTERNAL') || die;
     $setting->set_updatedcallback('theme_reset_all_caches');
     $temp->add($setting);
 
-    
+
     //This is the descriptor for Category Icons
     $name = 'theme_elegantchild/categoryiconinfo';
     $heading = get_string('categoryiconinfo', 'theme_elegantchild');
     $information = get_string('categoryiconinfodesc', 'theme_elegantchild');
     $setting = new admin_setting_heading($name, $heading, $information);
     $temp->add($setting);
-    
+
     $hascatnum = (!empty($PAGE->theme->settings->categorynumber));
-    
+
     if ($hascatnum) {
     	$catnum = $PAGE->theme->settings->categorynumber;
 	} else {
 		$catnum = '1';
 	}
-	    
+
     foreach (range(1, $catnum) as $categorynumber) {
-    
+
     // Category 1 Icon.
     $name = 'theme_elegantchild/categoryicon';
     $title = get_string('categoryicon' , 'theme_elegantchild');
@@ -1197,5 +1752,5 @@ defined('MOODLE_INTERNAL') || die;
     $setting->set_updatedcallback('theme_reset_all_caches');
     $temp->add($setting);
     }
-            
+
     $ADMIN->add('theme_elegantchild', $temp);
