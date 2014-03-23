@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * elegantchild theme with the underlying Bootstrap theme.
+ * elegantchild theme for the underlying Elegance theme.
  *
  * @package    theme
  * @subpackage elegantchild
@@ -27,9 +27,9 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-$plugin->version   = 2014032201;
-$plugin->release = '1.0 (Build: 20140322)';
-$plugin->maturity = MATURITY_BETA;             // this version's maturity level.
+$plugin->version   = 2014032300;
+$plugin->release = '1.1 (Build: 20140323)';
+$plugin->maturity = MATURITY_STAB:E;             // this version's maturity level.
 $plugin->requires  = 2013110500;
 $plugin->component = 'theme_elegantchild';
 $plugin->dependencies = array(

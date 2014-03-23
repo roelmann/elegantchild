@@ -15,12 +15,13 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * The elegantchild theme is built upon  Bootstrapbase 3 (non-core).
+ * elegantchild theme for the underlying Elegance theme.
  *
  * @package    theme
- * @subpackage theme_elegantchild
- * @author     Julian (@moodleman) Ridden
- * @author     Based on code originally written by G J Bernard, Mary Evans, Bas Brands, Stuart Lamour and David Scotson.
+ * @subpackage elegantchild
+ * @author	   Richard Oelmann
+ * @author     from Elegance by Julian (@moodleman) Ridden
+ * @author     Based on code originally written by G J Barnard, Mary Evans, Bas Brands, Stuart Lamour and David Scotson.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

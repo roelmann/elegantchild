@@ -16,36 +16,37 @@
 
 
 /**
- * Renderers to align Moodle's HTML with that expected by elegantchild
+ * elegantchild theme for the underlying Elegance theme.
  *
- * @package    theme_elegantchild
- * @copyright  2014 Julian Ridden http://moodleman.net
- * @authors    Julian Ridden -  Bootstrap 3 work by Bas Brands, David Scotson
+ * @package    theme
+ * @subpackage elegantchild
+ * @author	   Richard Oelmann
+ * @author     from Elegance by Julian (@moodleman) Ridden
+ * @author     Based on code originally written by G J Barnard, Mary Evans, Bas Brands, Stuart Lamour and David Scotson.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 $string['choosereadme'] = '
 <div class="clearfix">
 <div class="well">
-<h2>elegantchild Theme</h2>
+<h2>ElegantChild Theme</h2>
 <p><img class=img-polaroid src="elegantchild/pix/screenshot.jpg" /></p>
 </div>
 <div class="well">
 <h3>About</h3>
-<p>elegantchild is a 2 column, clean and highly customisable theme built on the Bootstrap 3 framework.</p>
+<p>ElegantChild is a child theme for Julians Elegance Bootstrap3 based theme</p>
 <h3>Theme Credits</h3>
-<p>Author: Julian (Moodleman) Ridden<br>
-Contact: julian@moodleman.net<br>
+<p>Author: Richard Oelmann, <br />based entirely on work done for the parent theme by Julian (Moodleman) Ridden<br />
+Contact: julian@moodleman.net<br />
 Website: <a href="http://moodleman.net">www.moodleman.net</a>
 </p>
-<p>Supportng Author: Bas Brands (for the Bootstrap 3 work)<br>
+<p>Supportng Author: Bas Brands (for the Bootstrap 3 work)<br />
 Contact: bas@sonsbeekmedia.nl<br>
 Website: <a href="http://www.basbrands.nl">www.basbrands.nl</a>
 </p>
-<h3>Report a bug:</h3>
-<p><a href="http://tracker.moodle.org">http://tracker.moodle.org</a></p>
 <h3>Donate if you can</h3>
-<p>elegantchild, and all my themes, will always be free to the Moodle community. However the time it is taking to ceate and maintain these is inscreasing with every release. If you like this theme and the support I provide in the forums I would like to encourage you to donate with the button below. This is in no way required to use this theme.</p>
+<p>ElegantChild is based on Julians Elegance. Therefore I am maintaining Julians PayPal link - see below.</p>
+<p>Elegance, and all my (Julians) themes, will always be free to the Moodle community. However the time it is taking to ceate and maintain these is increasing with every release. If you like this theme and the support I provide in the forums I would like to encourage you to donate with the button below. This is in no way required to use this theme.</p>
 
 <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=KNV2ZPHCYTB8E" class="btn btn-lrg btn-info">Donate AUD$15</a>
 

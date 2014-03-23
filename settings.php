@@ -16,11 +16,13 @@
 
 
 /**
- * Renderers to align Moodle's HTML with that expected by elegantchild
+ * elegantchild theme for the underlying Elegance theme.
  *
- * @package    theme_elegantchild
- * @copyright  2014 Julian Ridden http://moodleman.net
- * @authors    Julian Ridden -  Bootstrap 3 work by Bas Brands, David Scotson
+ * @package    theme
+ * @subpackage elegantchild
+ * @author	   Richard Oelmann
+ * @author     from Elegance by Julian (@moodleman) Ridden
+ * @author     Based on code originally written by G J Barnard, Mary Evans, Bas Brands, Stuart Lamour and David Scotson.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

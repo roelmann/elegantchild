@@ -16,11 +16,13 @@
 
 
 /**
- * Renderers to align Moodle's HTML with that expected by elegance
+ * elegantchild theme for the underlying Elegance theme.
  *
- * @package    theme_elegance
- * @copyright  2014 Julian Ridden http://moodleman.net
- * @authors    Julian Ridden -  Bootstrap 3 work by Bas Brands, David Scotson
+ * @package    theme
+ * @subpackage elegantchild
+ * @author	   Richard Oelmann
+ * @author     from Elegance by Julian (@moodleman) Ridden
+ * @author     Based on code originally written by G J Barnard, Mary Evans, Bas Brands, Stuart Lamour and David Scotson.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
  
@@ -39,17 +41,9 @@ $THEME->rendererfactory = 'theme_overridden_renderer_factory';
 
 $THEME->csspostprocess = 'theme_elegance_process_css';
 
-$THEME->javascripts = array(
-);
-$THEME->javascripts_footer = array(
-    'bootstrap3',
-);
-
 if (core_useragent::is_ie() && !core_useragent::check_ie_version('9.0')) {
     $THEME->javascripts[] = 'html5shiv';
 }
-
-$THEME->hidefromselector = false;
 
 $THEME->blockrtlmanipulations = array(
     'side-pre' => 'side-post',
