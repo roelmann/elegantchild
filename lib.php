@@ -84,3 +84,22 @@ function theme_elegantchild_pluginfile($course, $cm, $context, $filearea, $args,
         send_file_not_found();
     }
 }
+
+function theme_elegantchild_page_init(moodle_page $page) {
+    $page->requires->jquery();
+    $page->requires->jquery_plugin('bootstrap', 'theme_elegance');
+    $page->requires->jquery_plugin('fitvids', 'theme_elegance');
+    $page->requires->jquery_plugin('nprogress', 'theme_elegance');
+    $page->requires->jquery_plugin('unslider', 'theme_elegance');
+    $page->requires->jquery_plugin('eventswipe', 'theme_elegance');
+    $page->requires->jquery_plugin('alert', 'theme_elegance');
+    $page->requires->jquery_plugin('backstretch', 'theme_elegance');
+    $page->requires->jquery_plugin('carousel', 'theme_elegance');
+    $page->requires->jquery_plugin('collapse', 'theme_elegance');
+    $page->requires->jquery_plugin('modal', 'theme_elegance');
+    $page->requires->jquery_plugin('scrollspy', 'theme_elegance');
+    $page->requires->jquery_plugin('tab', 'theme_elegance');
+    $page->requires->jquery_plugin('tooltip', 'theme_elegance');
+    $page->requires->jquery_plugin('transition', 'theme_elegance');
+    $page->requires->jquery_plugin('modernizr', 'theme_elegance');
+}

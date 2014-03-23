@@ -19,7 +19,8 @@
  *
  * @package    theme
  * @subpackage elegantchild
- * @author     Julian (@moodleman) Ridden
+ * @author	   Richard Oelmann
+ * @author     from Elegance by Julian (@moodleman) Ridden
  * @author     Based on code originally written by G J Barnard, Mary Evans, Bas Brands, Stuart Lamour and David Scotson.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -32,6 +33,5 @@ $plugin->maturity = MATURITY_BETA;             // this version's maturity level.
 $plugin->requires  = 2013110500;
 $plugin->component = 'theme_elegantchild';
 $plugin->dependencies = array(
-    'theme_bootstrapbase'  => 2013110500,
     'theme_elegance' => 2014011600,
 );
