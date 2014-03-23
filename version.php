@@ -33,5 +33,5 @@ $plugin->requires  = 2013110500;
 $plugin->component = 'theme_elegantchild';
 $plugin->dependencies = array(
     'theme_bootstrapbase'  => 2013110500,
-    'theme-elegance' => 2014011600,
+    'theme_elegance' => 2014011600,
 );
